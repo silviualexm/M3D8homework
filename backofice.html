@@ -50,7 +50,7 @@
 		<div class="container text-center">
 			<h1>The New Amazon</h1>
 			<h2 class="mb-5">(backoffice)</h2>
-			<h2 class="my-5">Create new product</h2>
+			<h2 class="my-5" id="subTitle"></h2>
 			<div class="row">
 				<div class="col col-md-6 offset-md-3">
 					<form onsubmit="handleSubmit(event)">
@@ -129,14 +129,37 @@
 		></script>
 
 		<script>
+			const url = " https://striveschool-api.herokuapp.com/api/product/";
+			let id;
 			window.onload = async () => {
 				console.log("Page has been loaded...");
+				let urlParams = new URLSearchParams(window.location.search);
+				id = urlParams.get("id");
+				console.log("Id is: ", id);
+				if (id) {
+					document.getElementById("subTitle").innerText = "EDIT PRODUCT";
+					let response = await fetch(url + id, {
+						headers: {
+							Authorization:
+								"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUxZjliZDg5YzI2ZjAwMTU3ZjljMmUiLCJpYXQiOjE2MTU5ODUwODYsImV4cCI6MTYxNzE5NDY4Nn0.2480NnztYN4mpL6A_rXG-mu4VGcAIj-IfO5oJ8UnrXo",
+						},
+					});
+					let product = await response.json();
+					console.log(product);
+
+					document.getElementById("brand").value = product.brand;
+					document.getElementById("name").value = product.name;
+					document.getElementById("description").value = product.description;
+					document.getElementById("price").value = product.price;
+					document.getElementById("img").value = product.imageUrl;
+				} else {
+					document.getElementById("subTitle").innerText = "CREATE PRODUCT";
+				}
 			};
 
 			const handleSubmit = async (e) => {
 				e.preventDefault();
 
-				const url = "https://striveschool-api.herokuapp.com/api/product/";
 				let myProduct = {
 					name: document.getElementById("name").value,
 					description: document.getElementById("description").value,
@@ -146,18 +169,34 @@
 				};
 				console.log(myProduct);
 
+				let response;
 				try {
-					let response = await fetch(url, {
-						method: "POST",
-						body: JSON.stringify(myProduct),
-						headers: {
-							Authorization:
-								"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUxZjliZDg5YzI2ZjAwMTU3ZjljMmUiLCJpYXQiOjE2MTU5ODUwODYsImV4cCI6MTYxNzE5NDY4Nn0.2480NnztYN4mpL6A_rXG-mu4VGcAIj-IfO5oJ8UnrXo",
-							"Content-type": "application/json",
-						},
-					});
+					if (id) {
+						response = await fetch(url + id, {
+							method: "PUT",
+							body: JSON.stringify(myProduct),
+							headers: {
+								"Content-Type": "application/json",
+								Authorization:
+									"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUxZjliZDg5YzI2ZjAwMTU3ZjljMmUiLCJpYXQiOjE2MTU5ODUwODYsImV4cCI6MTYxNzE5NDY4Nn0.2480NnztYN4mpL6A_rXG-mu4VGcAIj-IfO5oJ8UnrXo",
+							},
+						});
+					} else {
+						response = await fetch(url, {
+							method: "POST",
+							body: JSON.stringify(myProduct),
+							headers: {
+								Authorization:
+									"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUxZjliZDg5YzI2ZjAwMTU3ZjljMmUiLCJpYXQiOjE2MTU5ODUwODYsImV4cCI6MTYxNzE5NDY4Nn0.2480NnztYN4mpL6A_rXG-mu4VGcAIj-IfO5oJ8UnrXo",
+								"Content-type": "application/json",
+							},
+						});
+					}
+					console.log(response);
+
 					if (response.ok) {
-						alert("Product was created successfully");
+						alert(`Product was ${id ? "edited" : "created"} successfully`);
+						window.location.assign("index.html");
 					} else {
 						alert("something went wrong");
 					}
