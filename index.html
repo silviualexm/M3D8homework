@@ -101,6 +101,13 @@
 		<div class="container text-center">
 			<h1 class="my-5">This is the New amazon</h1>
 			<h2 class="my-5">The Best Products</h2>
+			<div
+				id="loadingSpinner"
+				class="spinner-border text-primary d-none"
+				role="status"
+			>
+				<span class="sr-only">Loading...</span>
+			</div>
 			<div class="row row-cols-1 row-cols-md-4" id="curentProducts"></div>
 		</div>
 
@@ -125,6 +132,7 @@
 				let curentProducts = document.getElementById("curentProducts");
 
 				try {
+					document.getElementById("loadingSpinner").classList.toggle("d-none");
 					let resp = await fetch(url, {
 						headers: {
 							Authorization:
@@ -134,6 +142,7 @@
 					console.log(resp);
 					let data = await resp.json();
 					console.log(data);
+					document.getElementById("loadingSpinner").classList.toggle("d-none");
 
 					if (data.length > 0) {
 						data.forEach((prod) => {
@@ -148,9 +157,11 @@
 						                                        </div>
 						                                        <div class="card-footer">
 							                                        <p class="text-danger">Price: ${prod.price}$</p>
+																	<span><a class="btn btn-info" href="./detail.html?id=${prod._id}">VIEW DETAILS</a></span>
 						                                        </div>
 					                                        </div>
-                                                        </div
+                                                        </div>
+														
                                                         `;
 						});
 					} else {
