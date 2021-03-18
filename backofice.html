@@ -52,15 +52,16 @@
 			<h2 class="mb-5">(backoffice)</h2>
 			<h2 class="my-5">Create new product</h2>
 			<div class="row">
-				<div class="col col-md-8 offset-md-2">
+				<div class="col col-md-6 offset-md-3">
 					<form onsubmit="handleSubmit(event)">
 						<div class="form-group">
 							<label for="brand">Product brand</label>
 							<input
 								id="brand"
 								type="text"
-								class="form-group"
+								class="form-control"
 								placeholder="Write the product brand here"
+								required
 							/>
 						</div>
 						<div class="form-group">
@@ -68,8 +69,9 @@
 							<input
 								id="name"
 								type="text"
-								class="form-group"
+								class="form-control"
 								placeholder="Write the product name here"
+								required
 							/>
 						</div>
 						<div class="form-group">
@@ -77,8 +79,9 @@
 							<textarea
 								id="description"
 								rows="4"
-								class="form-group"
+								class="form-control"
 								placeholder="Write the product description here"
+								required
 							></textarea>
 						</div>
 						<div class="form-group">
@@ -86,8 +89,9 @@
 							<input
 								id="price"
 								type="number"
-								class="form-group"
+								class="form-control"
 								placeholder="Write the product price here"
+								required
 							/>
 						</div>
 						<div class="form-group">
@@ -95,8 +99,9 @@
 							<input
 								id="img"
 								type="text"
-								class="form-group img-fluid w-50 h-300"
-								placeholder="Write the product name here"
+								class="form-control img-fluid"
+								placeholder="Put the url image here"
+								required
 							/>
 						</div>
 						<div class="form-group">
