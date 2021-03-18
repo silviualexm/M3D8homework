@@ -146,7 +146,7 @@
 
 					if (data.length > 0) {
 						data.forEach((prod) => {
-							curentProducts.innerHTML += `<div class="col mb-4">
+							curentProducts.innerHTML += `
                                                             <div class="card" id="${prod._id}">
 						                                        <img src="${prod.imageUrl}" class="card-img-top" alt="${prod.name}" />
 						                                        <div class="card-body">
@@ -157,10 +157,11 @@
 						                                        </div>
 						                                        <div class="card-footer">
 							                                        <p class="text-danger">Price: ${prod.price}$</p>
-																	<span><a class="btn btn-info" href="./detail.html?id=${prod._id}">VIEW DETAILS</a></span>
+																	<span><a  href="./detail.html?id=${prod._id}">VIEW DETAILS</a></span>
+																	
 						                                        </div>
 					                                        </div>
-                                                        </div>
+                                                        
 														
                                                         `;
 						});
